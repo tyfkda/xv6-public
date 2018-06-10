@@ -50,5 +50,5 @@ main(int argc, char *argv[])
     wc(fd, argv[i]);
     close(fd);
   }
-  exit(0);
+  return 0;
 }

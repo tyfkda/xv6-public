@@ -136,10 +136,10 @@ tags: $(OBJS) entryother.S _init
 vectors.S: vectors.pl
 	perl $< > $@
 
-ULIB = ulib.o usys.o printf.o umalloc.o
+ULIB = crt0.o ulib.o usys.o printf.o umalloc.o
 
 _%: %.o $(ULIB)
-	$(LD) $(LDFLAGS) -N -e main -Ttext 0 -o $@ $^
+	$(LD) $(LDFLAGS) -N -e _start -Ttext 0 -o $@ $^
 	$(OBJDUMP) -S $@ > $*.asm
 	$(OBJDUMP) -t $@ | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$$/d' > $*.sym
 

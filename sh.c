@@ -168,7 +168,7 @@ main(void)
       runcmd(parsecmd(buf));
     wait();
   }
-  exit(0);
+  return 0;
 }
 
 void
