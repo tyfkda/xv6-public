@@ -13,7 +13,7 @@
 #include "fs.h"
 #include "buf.h"
 
-extern uchar _binary_fs_img_start[], _binary_fs_img_size[];
+extern uchar _binary_obj_fs_img_start[], _binary_obj_fs_img_size[];
 
 static int disksize;
 static uchar *memdisk;
@@ -21,8 +21,8 @@ static uchar *memdisk;
 void
 ideinit(void)
 {
-  memdisk = _binary_fs_img_start;
-  disksize = (uint)_binary_fs_img_size/BSIZE;
+  memdisk = _binary_obj_fs_img_start;
+  disksize = (uint)_binary_obj_fs_img_size/BSIZE;
 }
 
 // Interrupt handler.
