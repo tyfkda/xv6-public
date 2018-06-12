@@ -324,6 +324,7 @@ scheduler(void)
 {
   struct proc *p;
   struct cpu *c = mycpu();
+  int norunner;
   c->proc = 0;
   
   for(;;){
@@ -332,10 +333,12 @@ scheduler(void)
 
     // Loop over process table looking for process to run.
     acquire(&ptable.lock);
+    norunner = 1;
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
       if(p->state != RUNNABLE)
         continue;
 
+      norunner = 0;
       // Switch to chosen process.  It is the process's job
       // to release ptable.lock and then reacquire it
       // before jumping back to us.
@@ -352,6 +355,10 @@ scheduler(void)
     }
     release(&ptable.lock);
 
+    if (norunner) {
+      // No proc to run: Halt until something happens.
+      hlt();
+    }
   }
 }
 
