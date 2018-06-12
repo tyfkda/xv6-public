@@ -165,19 +165,22 @@ MKVECTORS = tools/vectors.pl
 kernel/vectors.S: $(MKVECTORS)
 	perl $< > $@
 
-ULIB = obj/user/crt0.o obj/user/ulib.o obj/user/usys.o obj/user/printf.o obj/user/umalloc.o
+ULIBOBJS = obj/user/crt0.o obj/user/ulib.o obj/user/usys.o obj/user/printf.o obj/user/umalloc.o
 
-obj/fs/%: obj/user/%.o $(ULIB)
+obj/user/ulib.a:	$(ULIBOBJS)
+	ar rcs $@ $^
+
+obj/fs/%: obj/user/%.o obj/user/ulib.a
 	@mkdir -p obj/fs obj/out
 	$(LD) $(LDFLAGS) -N -e main -Ttext 0 -o $@ $^
 	$(OBJDUMP) -S $@ > obj/out/$*.asm
 	$(OBJDUMP) -t $@ | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$$/d' > obj/out/$*.sym
 
-obj/fs/forktest: obj/user/forktest.o $(ULIB)
+obj/fs/forktest: obj/user/forktest.o obj/user/ulib.a
 	@mkdir -p obj/fs
 	# forktest has less library code linked in - needs to be small
 	# in order to be able to max out the proc table.
-	$(LD) $(LDFLAGS) -N -e main -Ttext 0 -o $@ obj/user/forktest.o obj/user/ulib.o obj/user/usys.o
+	$(LD) $(LDFLAGS) -N -e main -Ttext 0 -o $@ obj/user/forktest.o obj/user/ulib.a
 	$(OBJDUMP) -S $@ > obj/out/forktest.asm
 
 obj/out/mkfs: tools/mkfs.c include/fs.h
