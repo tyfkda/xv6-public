@@ -108,12 +108,12 @@ obj/user/%.o: user/%.c
 	@mkdir -p obj/user
 	$(CC) $(CFLAGS) -c -o $@ $<
 
-obj/user/%.o: ulib/%.c
-	@mkdir -p obj/user
+obj/ulib/%.o: ulib/%.c
+	@mkdir -p obj/ulib
 	$(CC) $(CFLAGS) -c -o $@ $<
 
-obj/user/%.o: ulib/%.S
-	@mkdir -p obj/user
+obj/ulib/%.o: ulib/%.S
+	@mkdir -p obj/ulib
 	$(CC) $(ASFLAGS) -c -o $@ $<
 
 obj/out/bootblock: kernel/bootasm.S kernel/bootmain.c
@@ -165,19 +165,53 @@ MKVECTORS = tools/vectors.pl
 kernel/vectors.S: $(MKVECTORS)
 	perl $< > $@
 
-ULIB = obj/user/crt0.o obj/user/ulib.o obj/user/usys.o obj/user/printf.o obj/user/umalloc.o
+ULIBOBJS = \
+	obj/ulib/crt0.o \
+	obj/ulib/strcpy.o \
+	obj/ulib/strlen.o \
+	obj/ulib/memset.o \
+	obj/ulib/strchr.o \
+	obj/ulib/gets.o \
+	obj/ulib/stat.o \
+	obj/ulib/atoi.o \
+	obj/ulib/memmove.o \
+	obj/ulib/chdir.o \
+	obj/ulib/close.o \
+	obj/ulib/dup.o \
+	obj/ulib/exec.o \
+	obj/ulib/exit.o \
+	obj/ulib/fork.o \
+	obj/ulib/fstat.o \
+	obj/ulib/getpid.o \
+	obj/ulib/kill.o \
+	obj/ulib/link.o \
+	obj/ulib/mkdir.o \
+	obj/ulib/mknod.o \
+	obj/ulib/open.o \
+	obj/ulib/pipe.o \
+	obj/ulib/read.o \
+	obj/ulib/sbrk.o \
+	obj/ulib/sleep.o \
+	obj/ulib/unlink.o \
+	obj/ulib/uptime.o \
+	obj/ulib/wait.o \
+	obj/ulib/write.o \
+	obj/ulib/printf.o obj/ulib/umalloc.o
 
-obj/fs/%: obj/user/%.o $(ULIB)
+obj/ulib/ulib.a:	$(ULIBOBJS)
+	ar rcs $@ $^
+
+obj/fs/%: obj/user/%.o obj/ulib/ulib.a
 	@mkdir -p obj/fs obj/out
 	$(LD) $(LDFLAGS) -N -e main -Ttext 0 -o $@ $^
 	$(OBJDUMP) -S $@ > obj/out/$*.asm
 	$(OBJDUMP) -t $@ | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$$/d' > obj/out/$*.sym
 
-obj/fs/forktest: obj/user/forktest.o $(ULIB)
+obj/fs/forktest: obj/user/forktest.o obj/ulib/ulib.a
 	@mkdir -p obj/fs
 	# forktest has less library code linked in - needs to be small
 	# in order to be able to max out the proc table.
-	$(LD) $(LDFLAGS) -N -e main -Ttext 0 -o $@ obj/user/forktest.o obj/user/ulib.o obj/user/usys.o
+	$(LD) $(LDFLAGS) -N -e main -Ttext 0 -o $@ obj/user/forktest.o obj/ulib/ulib.a
 	$(OBJDUMP) -S $@ > obj/out/forktest.asm
 
 obj/out/mkfs: tools/mkfs.c include/fs.h
