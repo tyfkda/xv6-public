@@ -205,7 +205,7 @@ obj/ulib/ulib.a:	$(ULIBOBJS)
 
 obj/fs/%: obj/user/%.o obj/ulib/ulib.a
 	@mkdir -p obj/fs obj/out
-	$(LD) $(LDFLAGS) -N -e main -Ttext 0 -o $@ $^
+	$(LD) $(LDFLAGS) -N -e _start -Ttext 0 -o $@ $^
 	$(OBJDUMP) -S $@ > obj/out/$*.asm
 	$(OBJDUMP) -t $@ | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$$/d' > obj/out/$*.sym
 
