@@ -296,7 +296,7 @@ sys_open(void)
 
   begin_op();
 
-  if(omode & O_CREATE){
+  if(omode & O_CREAT){
     ip = create(path, T_FILE, 0, 0);
     if(ip == 0){
       end_op();
@@ -375,7 +375,7 @@ sys_chdir(void)
   char *path;
   struct inode *ip;
   struct proc *curproc = myproc();
-  
+
   begin_op();
   if(argstr(0, &path) < 0 || (ip = namei(path)) == 0){
     end_op();
