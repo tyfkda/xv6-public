@@ -19,9 +19,9 @@ static int dirlookup(int fd, int ino, char* p);
 int main(int argc, char *argv[]) {
   char resultPath[512];
   if (getcwd(resultPath))
-    printf(1, "%s\n", resultPath);
+    _fdprintf(1, "%s\n", resultPath);
   else
-    printf(2, "pwd failed");
+    _fdprintf(2, "pwd failed");
   return 0;
 }
 

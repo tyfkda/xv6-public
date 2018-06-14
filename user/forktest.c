@@ -8,7 +8,7 @@
 #define N  1000
 
 void
-printf(int fd, const char *s, ...)
+_fdprintf(int fd, const char *s, ...)
 {
   write(fd, s, strlen(s));
 }
@@ -18,7 +18,7 @@ forktest(void)
 {
   int n, pid;
 
-  printf(1, "fork test\n");
+  _fdprintf(1, "fork test\n");
 
   for(n=0; n<N; n++){
     pid = fork();
@@ -29,23 +29,23 @@ forktest(void)
   }
 
   if(n == N){
-    printf(1, "fork claimed to work N times!\n", N);
+    _fdprintf(1, "fork claimed to work N times!\n", N);
     exit(1);
   }
 
   for(; n > 0; n--){
     if(wait() < 0){
-      printf(1, "wait stopped early\n");
+      _fdprintf(1, "wait stopped early\n");
       exit(1);
     }
   }
 
   if(wait() != -1){
-    printf(1, "wait got too many\n");
+    _fdprintf(1, "wait got too many\n");
     exit(1);
   }
 
-  printf(1, "fork test OK\n");
+  _fdprintf(1, "fork test OK\n");
 }
 
 int
