@@ -1,6 +1,5 @@
 #include "types.h"
-#include "stat.h"
-#include "user.h"
+#include <unistd.h>
 
 static void
 putc(int fd, char c)

@@ -3,8 +3,9 @@
 #include "types.h"
 #include "fcntl.h"
 #include "fs.h"
-#include "stat.h"
-#include "user.h"
+#include <string.h>
+#include <sys/stat.h>
+#include <unistd.h>
 
 #define NULL   ((void*)0)
 #define FALSE  (0)

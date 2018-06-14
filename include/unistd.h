@@ -1,9 +1,9 @@
+#pragma once
+
 struct stat;
-struct rtcdate;
 
 // system calls
 int fork(void);
-void exit(int) __attribute__((noreturn));
 int wait(void);
 int pipe(int*);
 int write(int, const void*, int);
@@ -24,16 +24,4 @@ char* sbrk(int);
 int sleep(int);
 int uptime(void);
 
-// ulib.c
-int stat(const char*, struct stat*);
-char* strcpy(char*, const char*);
-void *memmove(void*, const void*, int);
-char* strchr(const char*, char c);
-int strcmp(const char*, const char*);
 void _fdprintf(int, const char*, ...);
-char* gets(char*, int max);
-uint strlen(const char*);
-void* memset(void*, int, uint);
-void* malloc(uint);
-void free(void*);
-int atoi(const char*);

@@ -1,5 +1,5 @@
 #include "types.h"
-#include "user.h"
+#include <stdlib.h>
 
 extern int main(int argc, char** argv);
 

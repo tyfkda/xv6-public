@@ -1,10 +1,11 @@
 #include "types.h"
-#include "stat.h"
-#include "user.h"
 #include "fs.h"
 #include "fcntl.h"
 #include "syscall.h"
 #include "traps.h"
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
 #include "../kernel/memlayout.h"
 #include "../kernel/param.h"
 

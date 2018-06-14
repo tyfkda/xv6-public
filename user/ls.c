@@ -1,7 +1,8 @@
 #include "types.h"
-#include "stat.h"
-#include "user.h"
 #include "fs.h"
+#include <string.h>
+#include <sys/stat.h>
+#include <unistd.h>
 
 char*
 fmtname(char *path)
@@ -77,7 +78,7 @@ main(int argc, char *argv[])
 
   if(argc < 2){
     ls(".");
-    exit(0);
+    return 0;
   }
   for(i=1; i<argc; i++)
     ls(argv[i]);

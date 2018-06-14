@@ -8,7 +8,7 @@
 #define stat xv6_stat  // avoid clash with host struct stat
 #include "../include/types.h"
 #include "../include/fs.h"
-#include "../include/stat.h"
+#include "../include/sys/stat.h"
 #include "../kernel/param.h"
 
 #ifndef static_assert

@@ -1,6 +1,6 @@
 #include "types.h"
-#include "stat.h"
-#include "user.h"
+#include <stdlib.h>
+#include <unistd.h>
 
 int
 main(int argc, char **argv)
@@ -9,7 +9,7 @@ main(int argc, char **argv)
 
   if(argc < 2){
     _fdprintf(2, "usage: kill pid...\n");
-    exit(1);
+    return 1;
   }
   for(i=1; i<argc; i++)
     kill(atoi(argv[i]));

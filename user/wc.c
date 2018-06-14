@@ -1,10 +1,10 @@
 #include "types.h"
-#include "stat.h"
-#include "user.h"
+#include <string.h>
+#include <unistd.h>
 
 char buf[512];
 
-void
+int
 wc(int fd, char *name)
 {
   int i, n;
@@ -27,27 +27,30 @@ wc(int fd, char *name)
   }
   if(n < 0){
     _fdprintf(1, "wc: read error\n");
-    exit(1);
+    return 1;
   }
   _fdprintf(1, "%d %d %d %s\n", l, w, c, name);
+  return 0;
 }
 
 int
 main(int argc, char *argv[])
 {
   int fd, i;
+  int result;
 
   if(argc <= 1){
-    wc(0, "");
-    exit(0);
+    return wc(0, "");
   }
 
   for(i = 1; i < argc; i++){
     if((fd = open(argv[i], 0)) < 0){
       _fdprintf(1, "wc: cannot open %s\n", argv[i]);
-      exit(1);
+      return 1;
     }
-    wc(fd, argv[i]);
+    result = wc(fd, argv[i]);
+    if (result != 0)
+      break;
     close(fd);
   }
   return 0;

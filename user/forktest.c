@@ -2,8 +2,9 @@
 // Tiny executable so that the limit can be filling the proc table.
 
 #include "types.h"
-#include "stat.h"
-#include "user.h"
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
 
 #define N  1000
 

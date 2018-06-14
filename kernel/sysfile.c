@@ -5,9 +5,9 @@
 //
 
 #include "types.h"
+#include <sys/stat.h>
 #include "defs.h"
 #include "param.h"
-#include "stat.h"
 #include "mmu.h"
 #include "proc.h"
 #include "fs.h"

@@ -1,7 +1,8 @@
 // ulib.c: gets
 
 #include "types.h"
-#include "user.h"
+#include <stdio.h>
+#include <unistd.h>
 
 char*
 gets(char *buf, int max)

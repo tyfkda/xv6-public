@@ -2,7 +2,8 @@
 
 #include "types.h"
 #include "fcntl.h"
-#include "user.h"
+#include <sys/stat.h>
+#include <unistd.h>
 
 int
 stat(const char *n, struct stat *st)
