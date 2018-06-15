@@ -1,7 +1,5 @@
 // usys.S: wait
 
-#include "syscall.h"
-#include "syscallmacro.h"
-#include "traps.h"
+#include "../kernel/syscallmacro.h"
 
 SYSCALL(wait)

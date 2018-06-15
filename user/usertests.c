@@ -1,13 +1,13 @@
 #include "types.h"
 #include "fs.h"
 #include "fcntl.h"
-#include "syscall.h"
-#include "traps.h"
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 #include "../kernel/memlayout.h"
 #include "../kernel/param.h"
+#include "../kernel/syscall.h"
+#include "../kernel/traps.h"
 
 char buf[8192];
 char name[3];

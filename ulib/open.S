@@ -1,7 +1,5 @@
 // usys.S: open
 
-#include "syscall.h"
-#include "syscallmacro.h"
-#include "traps.h"
+#include "../kernel/syscallmacro.h"
 
 SYSCALL(open)
