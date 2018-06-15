@@ -247,7 +247,7 @@ UPROGS=\
 obj/fs.img: obj/out/mkfs README $(UPROGS)
 	obj/out/mkfs $@ README $(UPROGS)
 
--include */*.d
+-include obj/**/*.d
 
 clean:
 	rm -rf out obj
