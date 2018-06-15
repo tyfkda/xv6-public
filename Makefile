@@ -209,13 +209,6 @@ obj/fs/%: obj/user/%.o obj/ulib/ulib.a
 	$(OBJDUMP) -S $@ > obj/out/$*.asm
 	$(OBJDUMP) -t $@ | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$$/d' > obj/out/$*.sym
 
-obj/fs/forktest: obj/user/forktest.o obj/ulib/ulib.a
-	@mkdir -p obj/fs
-	# forktest has less library code linked in - needs to be small
-	# in order to be able to max out the proc table.
-	$(LD) $(LDFLAGS) -N -e main -Ttext 0 -o $@ obj/user/forktest.o obj/ulib/ulib.a
-	$(OBJDUMP) -S $@ > obj/out/forktest.asm
-
 obj/out/mkfs: tools/mkfs.c include/fs.h
 	@mkdir -p obj/out
 	gcc -Werror -Wall -o $@ tools/mkfs.c
